@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lyf.lifecycle">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:persistableMode="persistAcrossReboots" android:name=".fragment.basic.java.JavaFragmentActivity"></activity>
+        <activity
+            android:name=".fragment.drawer.kotlin.KotlinNavigationDrawerActivity"
+            android:label="@string/title_activity_kotlin_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.drawer.java.JavaNavigationDrawerActivity"
+            android:label="@string/title_activity_javva_navvigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".JavaBottomNavigationActivity"
+            android:label="@string/title_activity_java_bottom_navigation" />
+        <activity
+            android:name=".KotlinBottomNavigationActivity"
+            android:label="@string/title_activity_bottom_navigation" />
+        <activity
+            android:name=".JavaFullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_java_fullscreen"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".KotlinFullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".KotlinSecondActivity"
+            android:label="@string/title_activity_second"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert" />
+        <activity android:name=".KotlinMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

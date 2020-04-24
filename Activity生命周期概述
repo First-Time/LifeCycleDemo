@@ -1,0 +1,23 @@
+本文简单介绍Activity生命周期，内容主要来自于官方文档。
+
+在简述各个生命周期方法前，先总体做一下概述。我们可以从三个层面来监视Activity生命周期
+
+完整生命周期：完整生命周期始于onCreate方法回调，止于onDestroy方法回调
+可见周期：可见周期始于onStart方法回调，止于onStop方法回调
+前台周期：前台周期始于onResume方法回调，止于onPause方法回调
+
+下面简单介绍一下各个生命周期方法：
+
+onCreate 生命周期的第一个方法，表示Activity正在创建(启动)。特别说明：若您在该方法内调用finish方法，则会立即出发onDestroy回调，其他生命周期不会执行
+onRestart 该方法触发的前提：onStop方法被调用。onStop方法被调用而导致的Activity不可见到Activity再次可见时被调用。该方法回调之后系统会相继触发onStart和onResume方法。
+onStart Activity可见时调用(此时Activity尚未处于前台)：在onCreate方法之后或由onStop方法被调用而导致的Activity不可见到Activity再次可见时被调用
+onResume 该方法的回调标识Activity处于前台。官方文档指明，这里比较适合动画启动及排他性设备访问(如相机)等
+onPause Activity即将进入后台时回调此方法。需要特别注意的是，若Activity A启动Activity B，则Activity A的onPause方法回调完成后，Activity B才会创建，因此不要在该回调方法中做耗时操作。
+onStop Activity由可见到不可见时回调此方法
+onDestroy 生命周期的最后一个方法，表示Activity即将被销毁。官方文档指明，在某些情况下，系统会简单粗暴的杀掉Activity的宿主进程(如下文示意图中的标注1)，因此我们不应该依赖此方法做数据存储工作，可在此方法中做资源释放操作
+"Activity生命周期示意图"为官方文档给出的示意图
+
+此图很清晰严谨，但是官方文档对各个生命周期回调方法的描述并不是很详细，因此如果不认真研读文档，很难明白图中的生命周期方法的走向，并可能对某些方法产生误解。例如对于onStop方法，可能会有部分童鞋对其有误解，误认为Activity进入后台时回调该方法，其实进入后台时回调的是onPause方法，不可见时回调onStop方法；也有童鞋误以为onResume方法回调意味着可以进行交互，其实我们应该以public void onWindowFocusChanged (boolean hasFocus)回调中的hasFocus参数为依据来判定是否可以进行交互。
+Activity可见与否与其是否处于前台是两回事，onStart 与 onStop 配对描述Activity是否可见；onPause 与
+onResume 配对描述Activity是否处于前台。Activity可见并不意味着可以交互，同样的其处于前台也未必可以交互。直接的例子是，若Activity展示了Dialog，此时Activity仍处于前台，但我们却不能与Activity交互
+另外，对于上述示意图中的标注2走向，我相信很多人并没有亲自验证过，因为通常你很难通过交互来复现这一场景。对于这种场景，我们可以通过代码控制来模拟：Activity A启动Activity B，在Activity B的onCreate方法中直接调用finish方法
