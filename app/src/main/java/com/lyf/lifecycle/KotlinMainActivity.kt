@@ -1,6 +1,5 @@
 package com.lyf.lifecycle
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,25 +12,21 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class KotlinMainActivity : AppCompatActivity() {
 
-    val TAG: String? = KotlinMainActivity::class.java.simpleName
+    lateinit var TAG: String
 
     fun showDialog(view: View) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("提示")
             .setMessage("这个一个普通对话框")
             .setCancelable(true)
-            .setPositiveButton("确定", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    Toast.makeText(this@KotlinMainActivity, "你点击了确定", Toast.LENGTH_SHORT)
-                    dialog?.dismiss()
-                }
-            })
-            .setNegativeButton("取消", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    Toast.makeText(this@KotlinMainActivity, "你点击了取消", Toast.LENGTH_SHORT);
-                    dialog?.dismiss()
-                }
-            }).show()
+            .setPositiveButton("确定") { dialog, _ ->
+                Toast.makeText(this@KotlinMainActivity, "你点击了确定", Toast.LENGTH_SHORT)
+                dialog?.dismiss()
+            }
+            .setNegativeButton("取消") { dialog, _ ->
+                Toast.makeText(this@KotlinMainActivity, "你点击了取消", Toast.LENGTH_SHORT);
+                dialog?.dismiss()
+            }.show()
 
     }
 
@@ -46,6 +41,7 @@ class KotlinMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        TAG = localClassName
         println("$TAG onCreate")
 
         tv_activity4.setOnClickListener {
@@ -79,6 +75,15 @@ class KotlinMainActivity : AppCompatActivity() {
         println("$TAG onStart")
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        println("$TAG onRestoreInstanceState")
+        if (savedInstanceState != null) {
+            val params = savedInstanceState.getString("KotlinMainActivity")
+            println("$TAG on $params")
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         println("$TAG onResume")
@@ -87,6 +92,12 @@ class KotlinMainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         println("$TAG onPause")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("KotlinMainActivity", "KotlinMainActivity")
+        println("$TAG onSaveInstanceState")
     }
 
     override fun onStop() {

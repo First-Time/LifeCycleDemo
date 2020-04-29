@@ -34,6 +34,11 @@ public class JavaFragmentActivity extends AppCompatActivity {
         final Fragment fragment2 = JavaFragment2.newInstance("", "");
         final Fragment fragment3 = JavaFragment3.newInstance("", "");
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment1);
+        fragmentTransaction.commit();
+
         fragment1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

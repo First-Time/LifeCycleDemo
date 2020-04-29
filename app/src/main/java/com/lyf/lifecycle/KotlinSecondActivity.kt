@@ -27,6 +27,7 @@ class KotlinSecondActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         println("$TAG onStart")
+//        finish()
     }
 
     override fun onResume() {
